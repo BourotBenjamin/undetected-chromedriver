@@ -284,6 +284,7 @@ class Chrome(selenium.webdriver.chrome.webdriver.WebDriver):
             debug_host, debug_port = options.debugger_address.split(":")
             debug_port = int(debug_port)
 
+
         if enable_cdp_events:
             options.set_capability(
                 "goog:loggingPrefs", {"performance": "ALL", "browser": "ALL"}
