@@ -115,8 +115,6 @@ class Patcher(Chrome_Version, object):
         self.user_multi_procs = user_multi_procs
 
         self.is_old_chromedriver = version_main and version_main <= 114
-        # Needs to be called before self.exe_name is accessed
-        self._set_platform_name()
 
         if not os.path.exists(self.data_path):
             os.makedirs(self.data_path, exist_ok=True)
@@ -151,24 +149,6 @@ class Patcher(Chrome_Version, object):
 
         self.version_main = version_main
         self.version_full = None
-
-    def _set_platform_name(self):
-        """
-        Set the platform and exe name based on the platform undetected_chromedriver is running on
-        in order to download the correct chromedriver.
-        """
-        if self.platform.endswith("win32"):
-            self.platform_name = "win32"
-            self.exe_name %= ".exe"
-        if self.platform.endswith(("linux", "linux2")):
-            self.platform_name = "linux64"
-            self.exe_name %= ""
-        if self.platform.endswith("darwin"):
-            if self.is_old_chromedriver:
-                self.platform_name = "mac64"
-            else:
-                self.platform_name = "mac-x64"
-            self.exe_name %= ""
 
     def auto(self, executable_path=None, force=False, version_main=None, _=None):
         """
@@ -468,4 +448,3 @@ class Patcher(Chrome_Version, object):
                     continue
                 except FileNotFoundError:
                     break
-        )
